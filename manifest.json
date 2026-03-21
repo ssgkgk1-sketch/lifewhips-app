@@ -6,6 +6,7 @@
   "orientation": "any",
   "scope": "/",
   "short_name": "생활꿀팁앱",
-  "start_url": "/",
-  "theme_color": "#ff8c42"
+  "start_url": "https://ssgkgk-sketch.github.io/lifewhips-app/lifewhips.html",
+  "theme_color": "#ff8c42",
+  "description": "121가지의 실용적인 생활 꿀팁을 한 곳에서 만나보세요"
 }
