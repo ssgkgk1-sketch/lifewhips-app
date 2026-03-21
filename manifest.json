@@ -1,0 +1,10 @@
+{
+  "name": "생활꿀팁",
+  "short_name": "꿀팁",
+  "description": "121가지의 실용적인 생활 꿀팁을 한 곳에서 만나보세요",
+  "start_url": "./생활꿀팁-PWA.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#FF8C42",
+  "orientation": "portrait"
+}
