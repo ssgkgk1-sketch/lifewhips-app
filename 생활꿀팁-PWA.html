@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>생활꿀팁 - 일상을 더 편하게</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #FF8C42 0%, #FF7020 100%);
+            color: white;
+            padding: 25px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(255, 140, 66, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-title h1 {
+            font-size: 26px;
+            font-weight: 700;
+        }
+
+        .header-subtitle {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-header {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            color: white;
+        }
+
+        .btn-header:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .screen {
+            display: none;
+            min-height: calc(100vh - 100px);
+            padding: 20px;
+            animation: fadeIn 0.3s;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .home-screen {
+            padding: 20px;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 14px;
+            padding: 22px 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border: 2px solid transparent;
+        }
+
+        .category-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(255, 140, 66, 0.15);
+            border-color: #FF8C42;
+        }
+
+        .category-emoji {
+            font-size: 44px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .category-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            line-height: 1.4;
+        }
+
+        .tips-screen, .detail-screen {
+            padding: 20px;
+        }
+
+        .screen-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #FF8C42;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #FF8C42;
+            padding: 5px;
+        }
+
+        .screen-
+he
+ader h2 {
+            font-size: 24px;
+            color: #333;
+            flex: 1;
+        }
+.tips-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .tip-item {
+            background: white;
+            border-radius: 12px;
+            padding: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-left: 5px solid #FF8C42;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        .tip-item:hover {
+            transform: translateX(4px);
+            box-shadow: 0 4px 14px rgba(255, 140, 66, 0.12);
+        }
+
+        .tip-item-content {
+            flex: 1;
+        }
+
+        .tip-title {
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 6px;
+            font-size: 15px;
+        }
+
+        .tip-summary {
+            font-size: 13px;
+            color: #777;
+            line-height: 1.5;
+        }
+
+        .favorite-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            padding: 5px;
+        }
+
+        .favorite-btn:hover {
+            transform: scale(1.2);
+        }
+
+        .detail-screen {
+            padding: 20px;
+        }
+
+        .detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .detail-title {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .detail-title h2 {
+            font-size: 22px;
+            color: #333;
+            line-height: 1.4;
+            font-weight: 700;
+        }
+
+        .detail-content {
+            background: white;
+            border-radius: 14px;
+            padding: 24px;
+            line-height: 1.8;
+            color: #555;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        .detail-content p {
+            margin-bottom: 14px;
+        }
+
+        .detail-content strong {
+            color: #FF8C42;
+            font-weight: 700;
+        }
+
+        .favorites-screen {
+            padding: 20px;
+        }
+
+        .favorites-screen h2 {
+            margin-bottom: 20px;
+            color: #FF8C42;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .empty-message-icon {
+            font-size: 56px;
+            margin-bottom: 15px;
+        }
+
+        .empty-message p {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .empty-message-sub {
+            font-size: 13px;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .header-title h1 {
+                font-size: 22px;
+            }
+
+            .screen-header h2 {
+                font-size: 20px;
+            }
+
+            .detail-title h2 {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-title">
+                <div>
+                    <h1>💡 생활꿀팁</h1>
+                    <div class="header-subtitle">일상을 더 편하게</div>
+                </div>
+            </div>
+            <div class="header-buttons">
+                <button class="btn-header" onclick="showFavorites()" title="즐겨찾기">❤️</button>
+                <button class="btn-header" onclick="showHome()" title="홈
+">🏠</button>
+            </div>
+        </div>
+
+        <div id="home" class="screen active home-screen">
+<div class="categories-grid" id="categoriesGrid"></div>
+        </div>
+
+        <div id="tips" class="screen tips-screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="showHome()">←</button>
+                <h2 id="categoryTitle"></h2>
+            </div>
+            <div class="tips-list" id="tipsList"></div>
+        </div>
+
+        <div id="detail" class="screen detail-screen">
+            <div class="detail-header">
+                <div class="detail-title">
+                    <button class="back-btn" onclick="goBack()">←</button>
+                    <h2 id="tipTitle"></h2>
+                </div>
+                <button class="favorite-btn" id="detailFavBtn" onclick="toggleDetailFavorite()">🤍</button>
+            </div>
+            <div class="detail-content" id="tipContent"></div>
+        </div>
+
+        <div id="favorites" class="screen favorites-screen">
+            <h2>📌 즐겨찾기</h2>
+            <div id="favoritesList"></div>
+            <div id="emptyFavorites" class="empty-message">
+                <div class="empty-message-icon">📭</div>
+                <p>아직 즐겨찾기한 팁이 없습니다</p>
+                <p class="empty-message-sub">팁의 ❤️를 눌러서 저장하세요!</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const categories = [
+            {
+                id: 1,
+                name: "🚗 자동차 운전",
+                emoji: "🚗",
+                tips: [
+                    { id: 101, title: "주유구 방향 1초에 알기", content: "계기판의 주유소(주유기) 아이콘 옆을 자세히 보면 작은 화살표(◀️ 또는 ▶️)가 있습니다. 이 화살표가 가리키는 방향이 내 차의 주유구 위치입니다. 렌터카를 탈 때 아주 유용합니다." },
+                    { id: 102, title: "한여름 찜통 차, 10초 만에 열기 빼기", content: "조수석 창문만 끝까지 내린 뒤, 운전석 문을 5~6회 정도 부채질하듯 크게 열었다 닫았다 해보세요. 차 안의 뜨거운 공기가 반대편 창문으로 단번에 밀려 나갑니다." },
+                    { id: 103, title: "스마트키 배터리 방전 시 시동 걸기", content: "스마트키 배터리가 없어서 차 문은 내장된 막대기로 열었는데 시동이 안 걸린다면? 당황하지 마시고 스마트키 본체의 앞부분(또는 모서리)으로 엔진 스타트 버튼을 직접 꾹 누르면 임시로 시동이 걸립니다." },
+                    { id: 104, title: "헤드레스트 기둥을 비닐봉지 걸이로", content: "앞좌석 머리받침(헤드레스트)을 위로 살짝 뽑으면 철제 기둥이 보입니다. 여기에 S자 고리나 끈을 묶어두면 차량용 쓰레기봉투나 쇼핑백을 걸어두기 아주 좋습니다." },
+                    { id: 105, title: "와이퍼 소음 및 수명 연장", content: "와이퍼가 잘 안 닦이고 '드르륵' 소리가 난다면 바로 교체하지 마세요. 알코올 솜이나 물티슈로 고무 날 부분을 쓱쓱 문질러 닦아주면, 묻어있던 기름때와 먼지가 제거되면서 한동안 새것처럼 잘 닦입니다." },
+                    { id: 106, title: "치약으로 잔기스 및 헤드라이트 복원", content: "손톱에 걸리지 않는 얕은 잔기스나, 누렇게 변색된 헤드라이트는 마른 수건에 치약을 조금 묻혀 문질러보세요. 치약의 미세한 연마제 성분 덕분에 깨끗하게 복원됩니다." },
+                    { id: 107, title: "유통기한 지난 선크림으로 스티커 자국 제거", content: "차창에 강력하게 붙은 주차 위반 스티커나 오래된 블랙박스 스티커 자국에는 선크림을 듬뿍 바르고 10~15분 뒤에 안 쓰는 플라스틱 카드로 살살 밀어내면 아주 깔끔하게 떨어집니다." },
+                    { id: 108, title: "김 서림 방지는 쉐이빙 폼(면도크림)으로", content: "비 오는 날이나 겨울철 내부 창문에 김이 자주 서린다면, 마른 수건에 쉐이빙 폼을 묻혀 안쪽 유리를 닦아보세요. 얇은 코팅막이 형성되어 김 서림을 효과적으로 막아줍니다." },
+                    { id: 109, title: "진흙이나 눈길에 바퀴가 헛도를 때", content: "엑셀을 세게 밟을수록 바퀴는 더 깊이 빠집니다. 이때 자동차 실내 바닥에 있는 '발 매트'를 빼서 바퀴 앞(진행 방향) 타이어 바로 밑에 찔러 넣고 엑셀을 천천히 밟으면 접지력이 생겨 쉽게 탈출할 수 있습니다." },
+                    { id: 110, title: "방음벽이나 터널 안에서 차가 퍼졌을 때", content: "삼각대를 설치하러 뒤로 걸어가는 것은 2차 사고 위험이 매우 큽니다. 비상등을 켜고 트렁크를 완전히 활짝 열어둔 뒤, 사람은 무조건 가드레일 밖이나 안전지대로 먼저 대피하는 것이 가장 확실한 안전 수칙입니다." }
+                ]
+            },
+            {
+                id: 2,
+                name: "💻 앉아서 일하기",
+                emoji: "💻",
+                tips: [
+                    { id: 201, title: "모니터는 생각보다 '훨씬 더' 높게", content: "모니터 화면의 맨 위쪽 끝부분이 내 눈높이와 수평이 되거나 살짝 아래에 오는 것이 가장 좋습니다. 두꺼운 전공서적이나 모니터 받침대를 과감하게 받쳐보세요. 목의 피로도가 확 달라집니다." },
+                    { id: 202, title: "수건 한 장으로 허리 쿠션 만들기", content: "의자에 앉았을 때 허리의 쏙 들어간 부분(요추)이 붕 떠 있으면 허리 디스크에 쥐약입니다. 수건을 김밥처럼 둥글게 말아서 허리와 의자 사이에 끼워두면 훌륭한 맞춤형 요추 지지대가 됩니다." }
+,
+           { id: 203, title: "무릎은 엉덩이보다 아주 살짝 높게", content: "발이 바닥에 닿지 않거나 애매하게 닿으면 허리에 체중이 다 실립니다. 안 쓰는 두꺼운 책이나 택배 상자를 발밑에 두어 무릎 각도가 90도 이상으로 살짝 올라오게 세팅해 보세요." },
+{ id: 204, title: "키보드 뒷다리는 무조건 접기", content: "보통 키보드 뒷면의 받침대를 세워서 경사를 만들고 쓰시는데, 이러면 손목이 위로 꺾여 터널증후군이 빨리 옵니다. 키보드는 바닥에 완전히 평평하게 두고 치는 것이 손목 건강에 가장 좋습니다." },
+                    { id: 205, title: "안구 건조증 막는 20-20-20 룰", content: "20분마다, 20피트(약 6미터) 이상 떨어진 먼 곳을, 20초 동안 바라보세요. 모니터만 보느라 긴장된 눈 근육을 싹 풀어주는 안과 의사들의 1순위 추천 꿀팁입니다." },
+                    { id: 206, title: "마우스가 튀거나 안 먹힐 땐 A4 용지", content: "반짝거리는 책상이나 유리 위에서 마우스가 잘 안 움직인다면, 이면지나 A4 용지 한 장을 테이프로 살짝 고정해 마우스패드 대신 써보세요. 센서가 종이 질감을 아주 잘 인식합니다." },
+                    { id: 207, title: "책상 밑에 테니스공(또는 골프공) 두기", content: "신발을 살짝 벗고 발바닥 아치 부분으로 공을 살살 굴려보세요. 발바닥 근막이 마사지되면서 하체로 쏠린 피가 순환되고 붓기가 싹 빠집니다." },
+                    { id: 208, title: "일부러 '아주 작은' 물컵 사용하기", content: "대용량 텀블러를 옆에 두면 화장실 갈 때 빼고는 일어날 일이 없습니다. 종이컵만 한 작은 컵을 사용하면 물을 뜨러 가기 위해서라도 강제로 자리에서 일어나 걷게 됩니다." },
+                    { id: 209, title: "바인더 클립으로 케이블 고정", content: "다이소에서 파는 까만색 바인더 클립(집게)을 책상 모서리에 집어두고, 손잡이 쇠 부분 사이로 휴대폰 충전기 선을 통과시켜 두세요. 선이 바닥으로 떨어져 매번 주워야 하는 짜증이 완벽히 사라집니다." },
+                    { id: 210, title: "1시간마다 '만세'만 10초 하기", content: "자리에서 일어나기 눈치 보인다면 앉은 자리에서 팔만 위로 쭉 뻗어 만세를 10초간 해보세요. 움츠러들었던 흉곽이 펴지면서 뇌로 가는 산소 공급량이 늘어나 졸음이 깹니다." }
+                ]
+            },
+            {
+                id: 3,
+                name: "💪 건강 & 피부",
+                emoji: "💪",
+                tips: [
+                    { id: 301, title: "샤워기 물줄기로 얼굴 직접 씻지 않기", content: "샤워할 때 서서 샤워기 물줄기를 얼굴에 그대로 맞는 분들이 많습니다. 샤워기의 강한 수압과 뜨거운 물 온도는 피부 장벽을 무너뜨리고 홍조와 탄력 저하(처짐)를 유발하는 1등 공신입니다. 세안은 세면대에서 미지근한 물로 손에 물을 받아 부드럽게 튕기듯 씻어주세요." },
+                    { id: 302, title: "세안 후 1분 '보습 골든타임' 지키기", content: "수건으로 얼굴의 물기를 톡톡 두드려 닦아낸 직후, 욕실 안에서 바로 스킨이나 로션을 발라주세요. 피부의 수분이 공기 중으로 날아가기 전에 덮어주어야 속당김이 생기지 않습니다." },
+                    { id: 303, title: "스마트폰 액정 매일 알코올 스왑으로 닦기", content: "턱이나 뺨 한쪽에만 자꾸 트러블이 난다면 범인은 스마트폰일 확률이 높습니다. 변기보다 세균이 많다는 스마트폰 액정을 통화할 때 얼굴에 비비게 되므로, 매일 저녁 알코올 솜이나 소독 티슈로 한 번씩 닦아주는 것만으로도 피부 트러블이 확 줄어듭니다." },
+                    { id: 304, title: "베개 커버 대신 얇은 수건 깔고 매일 교체하기", content: "자는 동안 흘리는 땀과 두피의 유분, 각질이 베개에 묻어 세균이 번식합니다. 매일 베개 커버를 빨기 귀찮다면, 부드러운 수건을 한 장 깔고 자고 다음 날 아침에 수건만 교체해 보세요." },
+                    { id: 305, title: "실내 형광등 & 창가 앞에서도 선크림 바르기", content: "피부 노화의 주범인 자외선 A(UVA)는 유리창을 가볍게 통과합니다. 집이나 사무실 창가 자리에 오래 앉아 계신다면 실내에서도 가벼운 제형의 선크림을 발라주는 것이 기미와 주름을 막는 확실한 방법입니다." },
+                    { id: 306, title: "기상 직후 물 마시기 전 가글(또는 양치) 먼저 하기", content: "자는 동안 입안에는 엄청난 양의 유해 세균이 번식합니다. 아침에 일어나자마자 물부터 마시면 그 세균을 고스란히 위장으로 삼키게 됩니다. 꼭 가글이나 양치로 입안을 헹궈낸 뒤에 물을 드세요." },
+                    { id: 307, title: "아침 공복에 '미지근한 물' 한 잔 마시기", content: "찬물은 내장 기관을 놀라게 합니다. 체온과 비슷한 미지근한 물을 천천히 마시면, 밤새 끈적해진 혈액을 맑게 해 주고 장운동을 촉진해 아침 배변 활동에 큰 도움이 됩니다." },
+                    { id: 308, title: "식사 순서는 '채소 → 단백질 → 탄수화물' 순으로", content: "밥이나 빵(탄수화물)부터 먹으면 혈당이 급격히 치솟아 식곤증이 오고 살이 쉽게 찝니다. 샐러드나 나물 반찬(식이섬유)을 먼저 먹고, 고기나 생선(단백질)을 먹은 뒤 마지막에 밥을 먹으면 포만감도 빨리오고 혈당 스파이크를 막을 수 있습니다." },
+                    { id: 309, title: "식후 무조건 10분 이상 걷기", content: "밥을 먹고 바로 앉거나 누우면 위장으로 가야 할 혈액이 제대로 순환되지 않아 소화불량이 생깁니다. 식후 10분만 가볍게 산책해도 소화가 촉진되고 뱃살이 붙는 것을 방지할 수 있습니다." },
+                    { id: 310, title: "불면증엔 '4-7-8 호흡법'", content: "밤에 생각과 고민이 많아 잠이 안 올 때 쓰기 좋은 방법입니다. 4초간 코로 숨을 깊게 들이마시고, 7초간 숨을 참은 뒤, 8초간 입으로 천천히 길게 내뱉어 보세요. 부교감 신경이 활성화되면서 몸이 이완되고 스르르 잠에 빠져들게 됩니다." }
+                ]
+            },
+            {
+                id: 4,
+                name: "🍳 요리 & 식단",
+                emoji: "🍳",
+                tips: [
+                    { id: 401, title: "대파 냉동할 때 '식용유 한 스푼' 코팅", content: "찌개용으로 대파를 썰어서 냉동실에 얼려두면 나중에 한 덩어리로 꽁꽁 얼어붙어 떼어내기 힘듭니다. 썬 파를 통에 담기 전, 식용유를 한두 방울 떨어뜨려 살짝 버무린 뒤 얼려보세요. 나중에도 볶음밥용 밥알처럼 포슬포슬하게 떨어집니다." },
+                    { id: 402, title: "깐 마늘에 곰팡이 안 피게 보관하는 법", content: "깐 마늘을 냉장고에 그냥 두면 금방 물러지고 곰팡이가 핍니다. 밀폐용기 바닥에 '설탕'을 1cm 정도 깔고 키친타월을 덮은 뒤 마늘을 올려두세요. 설탕이 습기를 완벽하게 잡아주어 한 달도 거뜬하게 싱싱합니다." },
+{ id: 403, title: "전기세 잡고 밥맛 살리는 '즉시 냉동'", content: "전기밥솥에 밥을 오래 보온해 두면 수분이 날아가 맛이 없어지고 전기세도 많이 나갑니다. 밥이 다 되자마자 1인분씩 전용 용기에 담아 바로 냉동실에 얼려두세요. 먹을 때 전자레인지에 데우면 갓 지은 밥처럼 찰기가 살아납니다." },
+                    { id: 404, title: "눅눅해진 김, 전자레인지로 15초 심폐소생", content: "먹다 남아서 눅눅해진 조미김이나 맨김은 버리지 마세요. 접시에 키친타월을 깔고 김을 올린 뒤 전자레인지에 15~20초만 돌려주면 수분이 날아가 다시 바삭바삭해집니다." },
+                    { id: 405, title: "질긴 고기는 '시판 배 음료수'로 연육", content: "치아가 약하신 어르신과 함께 식사할 때, 고기가 조금만 질겨도 드시기 힘들어하십니다. 비싼 배나 키위를 갈아 넣을 필요 없이, 마트에서 파는 '갈아만든 배' 음료수에 고기를 20~30분만 재워두세요. 연육 작용이 뛰어나 잇몸으로 씹어도 될 만큼 고기가 부드러워집니다." },
+                    { id: 406, title: "계란찜을 푸딩처럼 부드럽게 만드는 비법", content: "계란을 푼 뒤 고운 체에 한 번 걸러 알끈을 제거해 보세요. 그리고 뚝배기 직화 대신, 물이 끓는 냄비 안에 그릇을 넣고 '중탕'으로 익히면 겉은 마르지 않고 속은 연두부처럼 촉촉해져서 소화하기도 아주 좋습니다." },
+                    { id: 407, title: "국물 요리 간 맞추기 공식", content: "찌개나 국을 끓일 때 간 맞추기가 어렵다면 이것만 기억하세요. 깔끔한 맛을 낼 땐 '소금', 깊고 구수한 맛은 '국간장', 감칠맛이 부족할 땐 '멸치/까나리 액젓'을 반 스푼 넣으면 죽은 국물 맛도 살아납니다." },
+                    { id: 408, title: "멸치 육수 비린내 안 나게 끓이기", content: "국물용 멸치를 그냥 물에 넣고 끓이면 특유의 비린내가 날 수 있습니다. 육수를 내기 전, 기름을 두르지 않은 마른 프라이팬에 멸치를 넣고 약불에서 1~2분 정도 덖어(볶아) 수분을 날려주세요. 비린내는 날아가고 훨씬 구수한 육수가 우러납니다." },
+                    { id: 409, title: "채소 잔류 농약은 '담금물'이 최고", content: "흐르는 물에 채소를 씻는 것보다, 물에 식초나 베이킹소다를 살짝 풀고 채소를 5분 정도 푹 담가두는 것이 잔류 농약 제거에 훨씬 효과적입니다. 그 후 흐르는 물에 가볍게 헹궈내면 완벽합니다." },
+                    { id: 410, title: "국물 요리 나트륨 배출엔 '칼륨' 채소 듬뿍", content: "한식은 찌개류가 많아 나트륨 섭취가 높아지기 쉽습니다. 국을 끓일 때 감자, 양파, 늙은 호박, 부추 같은 '칼륨'이 풍부한 채소를 넉넉하게 넣어주세요. 체내에 쌓인 짠 성분(나트륨)을 몸 밖으로 배출해 주는 훌륭한 해독제 역할을 합니다." }
+                ]
+            },
+            {
+                id: 5,
+                name: "💰 절약 & 재테크",
+                emoji: "💰",
+                tips: [
+                    { id: 501, title: "지역화폐 혜택은 매달 1순위로 챙기기", content: "생활비 방어의 1등 공신입니다. 양산사랑카드 같은 지자체 지역화폐는 충전 시 7~10%의 인센티브를 주거나 결제 시 할인이 적용됩니다. 동네 마트나 약국, 병원비 결제 시 무조건 사용하는 것만으로도 연 10%의 수익률을 확정 짓는 것과 같습니다." },
+                    { id: 502, title: "한전 '에너지 캐시백' 미리 신청하기", content: "가족이 함께 살면 관리비와 전기세가 만만치 않죠. 한국전력 앱(한전:ON)에서 '에너지 캐시백'을 미리 신청해 두면, 과거 사용량보다 전기를 적게 쓴 만큼 다음 달 요금에서 현금처럼 깎아줍니다." },
+                    { id: 503, title: "통신비 다이어트 (알뜰폰 + 파킹통장 조합)", content: "비싼 대형 통신사 무제한 요금제 대신 1~2만 원대 알뜰폰 요금제로 갈아타보세요. 여기서 아낀 매달 5~6만 원의 차액을 연 3% 이상 이자를 매일 주는 파킹통장(CMA 등)에 자동이체 해두면 1년 뒤 숨은 목돈이 튀어나옵니다." },
+                    { id: 504, title: "가족 의료비는 '소득이 가장 적은 사람' 카드로 몰아주기", content: "병원비나 약국 지출이 꾸준히 있다면, 가족 중 소득(총급여)이 가장 적은 사람의 신용/체크카드로 몰아서 결제하세요. 연말정산 시 의료비 세액공제 문턱(총급여의 3% 초과)을 훨씬 쉽게 넘길 수 있어 환급액이 커집니다." },
+                    { id: 505, title: "스테이블코인(USDT/USDC) 디파이 예치", content: "당장 쓰지 않고 은행에 묶여있는 현금이 있다면, 달러에 연동되는 스테이블코인으로 교환하여 Folks Finance 같은 신뢰도 높은 디파이(DeFi) 프로토콜에 예치해 보세요. 일반 시중은행 예적금보다 높은 연이율(APY)로 달러 복리 효과를 누릴 수 있습니다." },
+                    { id: 506, title: "내 돈 0원으로 코인 벌기 (테스트넷/에어드랍)", content: "투자금이 부족할 때는 시간과 노력을 투자하는 것이 최고의 재테크입니다. 초기 블록체인 생태계나 레이어 1, 2 프로젝트들의 테스트넷 미션에 꾸준히 참여해 두면, 추후 에어드랍을 통해 무자본으로 쏠쏠한 크립토 수익을 얻을 수 있습니다." },
+                    { id: 507, title: "구글 애드센스 달러는 원화 환전 대신 '달러 자산'으로", content: "구글 블로그를 운영하며 벌어들인 애드센스 달러 수익을 바로 원화로 빼지 마세요. 증권사 외화 계좌로 받은 뒤, 달러 그대로 미국 배당 ETF(SCHD 등)나 우량주에 재투자하면 환전 수수료도 아끼고 환율 상승 시기에 강력한 방어 수단이 됩니다." },
+                    { id: 508, title: "매달 내는 아까운 월세, 세액공제로 돌려받기", content: "월세로 거주 중이시라면 매달 나가는 주거비가 가장 큰 부담일 텐데요. 집주인 동의 없이도 관리비를 제외한 순수 월세 납입 증명만 잘 챙겨두면, 연말정산이나 5월 종합소득세 신고 때 최대 15~17%를 세금으로 돌려받을 수 있습니다." },
+                    { id: 509, title: "도서관 '희망 도서 신청' 및 '전자도서관' 적극 활용", content: "경제, 재테크, 크립토 관련 신간 도서를 매번 사서 보려면 은근히 책값이 많이 듭니다. 지역 도서관 앱에서 '희망 도서'를 신청해 가장 먼저 새 책을 빌려보거나, 전자도서관에서 무료로 e북을 대여하면 지출을 완벽하게 막을 수 있습니다." },
+                    { id: 510, title: "온라인 쇼핑 전 '경유 플랫폼' 무조건 거치기", content: "쿠팡, 11번가, 알리익스프레스 등에서 물건을 살 때 그냥 앱을 켜지 마시고 샵백(ShopBack)이나 페이북 같은 경유 플랫폼을 한 번 거쳐서 들어가세요. 결제 금액의 1~5%가 현금(캐시백)으로 적립되어 나중에 통장으로 바로 인출할 수 있습니다." }
+                ]
+            },
+            {
+                id: 6,
+                name: "⏰ 시간관리",
+   emoji: "⏰",
+tips: [
+                    { id: 601, title: "AI 툴로 '초안'과 '뼈대' 먼저 잡기", content: "텍스트나 이미지를 백지부터 기획하려면 시간이 너무 오래 걸립니다. 챗봇이나 이미지 생성 AI를 활용해 블로그 목차나 썸네일 초안을 먼저 뽑아내 보세요. 작업에 들어가는 뇌의 피로도와 물리적인 시간이 절반 이하로 확 줄어듭니다." },
+                    { id: 602, title: "작업 몰아치기(Batching) 기법", content: "글쓰기, 이미지 편집, 검색 엔진 최적화(SEO) 태그 설정을 매번 번갈아 하지 마세요. 뇌가 새로운 작업에 적응하는 데는 생각보다 긴 '전환 비용'이 듭니다. '오늘은 썸네일 이미지 5개 생성하는 날', '내일은 글 3개 예약 발행하는 날'처럼 같은 종류의 작업을 한 번에 몰아서 처리하세요." },
+                    { id: 603, title: "자투리 시간에 '음성 메모'로 아이디어 축적", content: "이동할 때나 씻을 때 갑자기 좋은 포스팅 주제나 아이디어가 떠오르면 스마트폰 음성 메모나 카톡 '나에게 보내기'로 바로 남겨두세요. 각 잡고 책상에 앉아서 아이디어를 쥐어짜는 고통스러운 시간을 없애줍니다." },
+                    { id: 604, title: "완벽주의 버리기 (Done is better than perfect)", content: "100점짜리 결과물을 위해 며칠을 질질 끄는 것보다, 80점짜리로 일단 완성해서 발행하고 피드백을 받으며 수정하는 것이 시간 관리의 핵심입니다. 일단 실행하고 나중에 다듬으세요." },
+                    { id: 605, title: "2분 법칙 (2-Minute Rule) 실천", content: "식사 후 그릇 치우기, 쓰레기 분리수거 등 '2분 안에 끝낼 수 있는 일'은 미루지 말고 그 자리에서 바로 처리하세요. 가족들과 함께 생활하는 공간에서는 자잘한 집안일이 쌓이기 전에 바로바로 치우는 것이, 나중에 대청소하느라 황금 같은 주말을 날리는 것을 막아줍니다." },
+                    { id: 606, title: "'해야 할 일(To-Do)' 대신 '하지 말아야 할 일(Not-To-Do)' 리스트", content: "무의미하게 유튜브 쇼츠 넘겨보기, 목적 없이 습관적으로 코인 차트 쳐다보기 등 내 시간을 갉아먹는 행동 3가지를 적고 눈에 띄는 곳에 붙여두세요. 이것만 안 해도 하루에 순수익 2시간이 창출됩니다." },
+                    { id: 607, title: "옷 고르는 결정 에너지 아끼기", content: "외출복이나 홈웨어를 매번 고르느라 아침 시간을 허비하지 마세요. 계절별로 가장 편하고 단정한 옷 2~3세트를 정해두고 돌려 입으면, 하루를 시작하는 아침의 귀중한 뇌 에너지를 아낄 수 있습니다." },
+                    { id: 608, title: "가장 중요하고 힘든 일을 '오전'에 끝내기", content: "사람의 의지력은 아침에 가장 꽉 차 있고 저녁이 될수록 고갈됩니다. 머리를 많이 써야 하는 복잡한 리서치나 글쓰기 같은 핵심 업무는 눈뜨자마자 가장 먼저 해치우는 것이 효율이 제일 좋습니다." },
+                    { id: 609, title: "뽀모도로(Pomodoro) 테크닉 활용", content: "'25분 초집중 + 5분 휴식' 사이클을 타이머로 맞춰두고 일해보세요. 25분 동안은 스마트폰을 아예 안 보이는 곳에 두고 작업에만 몰두하면, 하루 종일 책상에 늘어져 앉아있는 것보다 훨씬 질 높은 결과물이 나옵니다." },
+                    { id: 610, title: "알림(Push) 무음 설정 및 '몰아보기'", content: "카톡, 이메일, 각종 앱 알림이 울릴 때마다 집중력의 맥이 뚝뚝 끊깁니다. 꼭 필요한 알림을 제외하고 모두 끄거나 무음으로 바꾼 뒤, 점심시간이나 오후 4시 등 내가 정해놓은 특정 시간에만 몰아서 확인하세요." },
+                    { id: 611, title: "'1시간 앉아일 = 담배' 깨닫기", content: "1시간 계속 앉아서 일하는 것이 담배 피우는 것만큼 나쁘다는 연구 결과가 있습니다. 꼭 일어나서 운동해주세요. 5분만 스트레칭이나 산책해도 큰 도움이 됩니다." }
+                ]
+            },
+            {
+                id: 7,
+                name: "🧹 청소 & 정리",
+                emoji: "🧹",
+                tips: [
+                    { id: 701, title: "옷은 무조건 '세로'로 수납하기", content: "서랍장에 옷을 눕혀서 층층이 쌓으면 밑에 있는 옷을 꺼낼 때마다 위쪽 옷이 다 흐트러집니다. 책을 꽂듯이 세로로 접어서 수납하면 공간도 훨씬 덜 차지하고, 어떤 옷이 있는지 한눈에 들어와 외출 준비 시간도 단축됩니다." },
+                    { id: 702, title: "'원 인, 원 아웃 (One In, One Out)' 법칙", content: "수납공간이 부족한 집에서 절대 잊지 말아야 할 철칙입니다. 물건 하나를 새로 샀다면, 안 쓰는 물건 하나는 반드시 비우는 습관을 들여보세요. 이 규칙만 지켜도 집안에 짐이 쌓이는 것을 완벽하게 막을 수 있습니다." },
+                    { id: 703, title: "냉장고 파먹기를 위한 '마스킹 테이프' 라벨링", content: "식구가 많으면 냉장고 깊숙한 곳에 검은 봉지에 싸인 식재료가 방치되기 쉽습니다. 투명한 용기에 식재료를 담고, 다이소 마스킹 테이프에 '내용물과 구매일자'를 적어 붙여두세요. 식비 방어와 냉장고 정리가 동시에 해결됩니다." },
+                    { id: 704, title: "버려지는 '수직 공간'에 압축봉 활용", content: "신발장이나 싱크대 하부장 위쪽의 텅 빈 공간에 천 원짜리 압축봉을 가로로 걸어보세요. 그 위에 가벼운 물건을 얹거나 S자 고리를 걸어 청소용품, 우산 등을 매달아 두면 죽은 공간이 훌륭한 수납장으로 변신합니다." },
+                    { id: 705, title: "머리카락 청소는 '유리창 닦이(스퀴지)'가 1등", content: "식구들이 머리를 말리고 난 뒤 바닥에 수북한 머리카락, 청소기로 밀면 롤러에 다 엉키고 맙니다. 욕실용 유리창 닦이 고무 밀대로 방바닥을 쓱쓱 긁어모아 보세요. 바닥에 붙은 먼지와 머리카락이 놀라울 정도로 깔끔하게 뭉쳐 나옵니다." },
+                    { id: 706, title: "전자레인지 찌든 때는 '식초물 3분' 완성", content: "전자레인지 내부에 음식물이 튀어 말라붙었다면, 전자레인지용 용기에 물 한 컵과 식초 2~3스푼을 넣고 3분간 돌려주세요. 수증기가 내부의 찌든 때를 싹 불려주어 마른행주로 닦기만 해도 새것처럼 뽀득뽀득해집니다." },
+                    { id: 707, title: "가스레인지 기름때는 '먹다 남은 소주'로", content: "주방 후드나 가스레인지 주변의 끈적한 기름때는 비싼 전용 세제 대신 남은 소주나 유통기한 지난 손소독제를 키친타월에 묻혀 닦아보세요. 알코올 성분이 기름기를 순식간에 녹여줍니다." },
+                    { id: 708, title: "구멍 난 고무장갑과 안 신는 수면 양말의 재탄생", content: "구멍 난 고무장갑은 손가락 부분을 가위로 잘라 고무줄 대신 사용하면 밀폐력이 아주 뛰어납니다. 짝 잃은 수면 양말은 손에 끼고 블라인드나 창틀을 쓱쓱 문지르면 먼지가 날리지 않고 싹 흡착됩니다." },
+{ id: 709, title: "욕실 물때와 거울 얼룩엔 '린스' 코팅", content: "화장실 거울에 김이 서리고 얼룩이 잘 진다면, 마른 수건에 린스를 아주 조금만 묻혀서 거울을 닦아보세요. 얇은 코팅막이 형성되어 물방울이 맺히지 않고 먼지도 덜 달라붙습니다." },
+                    { id: 710, title: "침대 매트리스 습기 제거엔 '베이킹소다'", content: "매일 덮고 자는 이불과 매트리스, 세탁하기 힘들다면 베이킹소다를 얇게 펴서 뿌려두세요. 30분 정도 방치한 뒤 진공청소기로 싹 빨아들이면, 베이킹소다가 습기와 불쾌한 냄새를 싹 머금고 사라집니다." },
+                    { id: 711, title: "관절은 지키고 시간은 아끼는 꼼수 청소법", content: "바닥 닦는다고 무릎 꿇고 엎드리는 건 관절에 최악입니다. 안 쓰는 수면양말을 밀대 패드에 씌우고, 그 위에 도톰한 물티슈나 청소포를 덧대어 서서 편하게 닦으세요. 빨 필요 없이 물티슈만 떼서 버리면 청소 끝입니다." }
+                ]
+            },
+            {
+                id: 8,
+                name: "👥 관계 & 소통",
+                emoji: "👥",
+                tips: [
+                    { id: 801, title: "갈등 상황에선 무조건 '나 전달법(I-Message)' 쓰기", content: "물건을 사거나 이사 문제 등 현실적인 문제로 의견이 부딪힐 때, \"당신은 왜 맨날 그래?\"라고 공격하면 바로 싸움이 납니다. \"나는 당신이 그렇게 말해서 조금 서운해\"처럼 '내 감정'을 주어로 말하면 상대방의 방어기제를 낮출 수 있습니다." },
+                    { id: 802, title: "어르신들과 대화할 때는 '조언 구하기' 스킬", content: "어머니나 할머니와 대화할 때 무언가를 설명하거나 설득하려 들면 잔소리로 들리기 쉽습니다. 대신 \"엄마 생각은 어때요?\", \"할머니, 이럴 땐 어떻게 하는 게 좋아요?\"라고 먼저 물어보세요. 존중받는다고 느끼셔서 대화가 훨씬 부드러워집니다." },
+                    { id: 803, title: "한 공간에 살수록 '혼자만의 시간'과 '선' 지켜주기", content: "투룸처럼 한정된 공간에서 여러 식구가 함께 생활할 때는 물리적, 심리적 거리가 아주 가깝습니다. 가족이라도 방문이 닫혀있을 때는 꼭 노크를 하거나, 특정 시간에는 서로 터치하지 않는 등 최소한의 '선'을 만들어두는 것이 최고의 배려입니다." },
+                    { id: 804, title: "부탁할 때는 '쿠션어' 하나만 덧붙이기", content: "\"이것 좀 해줘\" 대신 \"피곤하겠지만 이것 좀 부탁해도 될까?\", \"바쁜 거 아는데~\"라는 쿠션(완충) 단어 하나만 앞에 붙여보세요. 듣는 사람의 기분이 180도 달라집니다." },
+                    { id: 805, title: "마법의 '1-2-3 법칙' 지키기", content: "내가 1분 동안 말했다면, 상대방의 이야기를 2분 동안 듣고, 3번 이상 고개를 끄덕이며 맞장구쳐주세요. 이 비율만 지켜도 어딜 가나 '대화하기 편안한 사람'이라는 평가를 받습니다." },
+                    { id: 806, title: "공감이 어려울 땐 '앵무새 화법(백트래킹)'", content: "상대방이 힘든 일을 토로할 때 굳이 해결책을 주려 하지 마세요. \"오늘 진짜 짜증 났어\"라고 하면 \"아, 오늘 진짜 짜증 났구나\"하고 끝말만 그대로 따라 해줘도 상대방은 완벽하게 공감받았다고 느낍니다." },
+                    { id: 807, title: "'하지만(But)' 대신 '그리고(And)' 사용하기", content: "상대의 의견에 반대해야 할 때 \"그것도 좋은데, 하지만 이건 어때?\"라고 하면 앞의 칭찬이 다 깎여나갑니다. \"그것도 좋네! 그리고 이렇게 해보면 더 완벽하겠다\"라고 접속사만 바꿔보세요." },
+                    { id: 808, title: "사과할 때 '근데(토 달기)' 절대 금지", content: "실수나 잘못을 했을 때 가장 최악의 사과가 \"미안해, 근데 너도 아까...\"입니다. 사과할 때는 깔끔하게 \"내가 그 부분을 놓쳤네, 미안해\"로 끝내야 감정의 불씨가 남지 않습니다." },
+                    { id: 809, title: "화가 머리끝까지 났을 땐 '속으로 딱 3초만 세기'", content: "욱하는 마음에 필터링 없이 뱉은 말은 100% 후회로 돌아옵니다. 입을 열기 전에 심호흡하며 딱 3초만 속으로 숫자를 세면, 뇌의 이성이 돌아와 최악의 상황을 막아줍니다." },
+                    { id: 810, title: "중요한 얘기나 다툼은 절대 '카톡'으로 하지 않기", content: "텍스트에는 표정과 억양이 담기지 않아서 원래 의도보다 훨씬 차갑고 날카롭게 전달됩니다. 오해가 2배로 커지기 쉬우니, 조금이라도 민감한 주제는 무조건 얼굴을 보거나 전화 음성으로 소통하세요." },
+                    { id: 811, title: "적극적인 경청의 힘", content: "상대가 말할 때 휴대폰을 내려두고 눈을 마주치며 듣는 것만으로도 그 사람은 충분히 존중받는다고 느낍니다. 바쁘더라도 말하는 사람에게 온전한 주의를 기울이는 것이 가장 높은 존경을 표현하는 방법입니다." }
+                ]
+            },
+            {
+                id: 9,
+                name: "✈️ 여행 & 레저",
+                emoji: "✈️",
+                tips: [
+                    { id: 901, title: "옷은 접지 말고 '돌돌 말아서' 챙기기", content: "캐리어 공간을 가장 많이 잡아먹는 것이 옷입니다. 옷을 네모나게 접는 대신 김밥처럼 둥글게 말아서 넣으면 공간이 1.5배 이상 늘어나고, 여행지에 도착했을 때 옷에 구김도 훨씬 덜 갑니다. 신발은 안 쓰는 일회용 헤어 캡이나 비닐장갑에 씌워 넣으면 아주 깔끔합니다." },
+                    { id: 902, title: "출발 전 신분증과 '주차 구역' 사진 찍어두기", content: "공항이나 대형 레저 시설 주차장에서 차를 어디 뒀는지 까먹어 여행을 마치고 진을 빼는 경우가 정말 많습니다. 차에서 내리자마자 기둥 번호를 사진으로 찍어두고, 지갑 분실에 대비해 가족들의 신분증도 미리 폰으로 찍어두면 비상시에 아주 유용합니다." },
+                    { id: 903, title: "'열린관광지(무장애 여행지)' 적극 검색하기", content: "가족 중에 걷는 것을 힘들어하시거나 계단을 오르기 부담스러워하는 분이 계시다면, 여행지 코스를 짤 때 한국관광공사의 '열린관광지'를 검색해 보세요. 턱이나 계단이 없고 평탄한 데크 길이 깔려 있어 휠체어나 유모차는 물론, 남녀노소 누구나 체력 부담 없이 경치를 즐길 수 있습니다." },
+                    { id: 904, title: "관광지 맛집 대신 '지역 관공서 근처' 식당 찾기", content: "화려한 관광지 한복판에 있는 식당들은 가격만 비싸고 실망스러운 경우가 꽤 있습니다. 그 지역의 시청, 군청 등 관공서 근처 골목으로 가보세요. 진짜 현지 직장인들과 주민들이 매일 가는 가성비 좋고 맛있는 '로컬 찐 맛집'들이 몰려 있습니다." },
+{ id: 905, title: "항공권 & 숙소 검색은 브라우저 '시크릿 모드'로", content: "여행지 검색 기록(쿠키)이 쌓이면, 사이트에서 여행 수요가 높다고 판단해 항공권이나 숙소 가격을 슬쩍 올리는 꼼수를 부리기도 합니다. 웹 브라우저의 '시크릿 모드(비밀 모드)'를 켜고 검색하면 가격 변동 없이 최저가를 정확하게 찾을 수 있습니다." },
+                    { id: 906, title: "레저 시설/입장권은 무조건 '방문 하루 전' 온라인 예매", content: "케이블카, 테마파크, 수목원 등의 지역 명소 입장권을 현장 매표소에서 제값 주고 사면 손해입니다. 네이버 예약이나 소셜 커머스 앱에서 예매하면 최소 10~20% 저렴한데, 당일 예매는 사용이 안 되는 곳이 많으므로 무조건 전날 밤에 미리 결제해 두세요." },
+                    { id: 907, title: "고속도로 주유소 대신 'IC 빠져나와서 직후' 주유하기", content: "고속도로 휴게소 주유소는 알뜰주유소라도 시내보다 단가가 높은 편입니다. 목적지 IC(나들목)를 빠져나오자마자 나타나는 외곽 도로변 주유소들이 기름값이 훨씬 저렴한 경우가 많으니, 게이지가 조금 여유 있다면 IC 진출 직후에 주유하시는 것이 이득입니다." },
+                    { id: 908, title: "구글 지도 '오프라인 저장' 기능 활용하기", content: "산속 깊은 캠핑장이나 데이터가 잘 터지지 않는 외곽 지역으로 갈 때는 구글 지도 앱에서 미리 해당 지역의 지도를 다운로드해 두세요. 인터넷이 완전히 끊겨도 내비게이션과 지도를 완벽하게 볼 수 있어 길을 잃을 염려가 없습니다." },
+                    { id: 909, title: "호텔 방이 너무 건조할 땐 '젖은 수건 + 옷걸이'", content: "숙소에 가습기가 없어서 자고 일어나면 목이 칼칼하고 아플 때가 있습니다. 수건 1~2장을 물에 흠뻑 적셔서 물이 뚝뚝 떨어지지 않을 정도로만 짠 뒤, 침대 근처 옷걸이나 의자에 널어두고 주무세요. 다음 날 아침까지 촉촉함이 유지되는 최고의 천연 가습기입니다." },
+                    { id: 910, title: "멀미약은 '먹는 약 + 붙이는 패치' 교차 사용 절대 금지", content: "차를 오래 타서 멀미가 심할 때, 효과를 높이겠다고 귀 밑에 붙이는 패치형과 마시는 멀미약을 동시에 사용하면 심한 부작용(시력 저하, 어지럼증 등)이 올 수 있습니다. 꼭 한 가지 종류만 용법에 맞게 사용하셔야 안전합니다." },
+                    { id: 911, title: "비행기 탈 때 화장실 다녀오고 오르기", content: "비행 중에 화장실을 자주 가지 못하면 하체에 혈액이 고여 정맥혈전이 생길 수 있습니다. 탑승 전에 반드시 화장실을 다녀오고, 비행 중에도 2시간마다 일어나 화장실을 다녀오세요. 앉은 자리에서라도 발목을 돌리고 다리를 움직이는 것이 건강한 여행을 위해 중요합니다." }
+                ]
+            },
+            {
+                id: 10,
+                name: "🔧 집안일 & DIY",
+                emoji: "🔧",
+                tips: [
+                    { id: 1001, title: "관절은 지키고 시간은 아끼는 꼼수 청소법", content: "바닥 닦는다고 무릎 꿇고 엎드리는 건 관절에 최악입니다. 안 쓰는 수면양말을 밀대 패드에 씌우고, 그 위에 도톰한 물티슈나 청소포를 덧대어 서서 편하게 닦으세요. 빨 필요 없이 물티슈만 떼서 버리면 청소 끝입니다." },
+                    { id: 1002, title: "무거운 가구 밑 먼지는 '옷걸이+스타킹'", content: "소파나 침대, 거실장 밑의 깊숙한 먼지를 뺄 때 억지로 무거운 가구를 밀지 마세요. 세탁소 옷걸이를 길게 다이아몬드 모양으로 늘린 뒤, 올 나간 스타킹을 씌워 가구 밑을 쓱쓱 저어주면 정전기 때문에 먼지 뭉텅이가 알아서 딸려 나옵니다." },
+                    { id: 1003, title: "샤워 직후 '5초 스퀴지'로 물때 원천 차단", content: "화장실 청소를 날 잡고 몰아서 하면 허리가 부서집니다. 샤워 후 욕실에 습기가 꽉 차 있을 때, 천 원짜리 유리창 닦이(스퀴지)로 거울과 벽면 물기만 한 번씩 쓱 긁어내려도 물때와 곰팡이 생성을 90% 이상 막을 수 있습니다." },
+                    { id: 1004, title: "헛도는 나사 구멍엔 '이쑤시개+목공풀'", content: "오래된 가구나 방문 손잡이 나사가 헐거워져서 계속 빠질 때가 있죠. 헐거운 구멍 안에 나무 이쑤시개를 2~3개 부러뜨려 넣고 (목공풀이 있으면 살짝 발라주세요), 그 위에 원래 나사를 다시 박으면 새것처럼 아주 짱짱하게 고정됩니다." },
+                    { id: 1005, title: "뻑뻑한 문과 서랍장엔 '양초' 칠하기", content: "방문을 여닫을 때마다 삐그덕 소리가 나거나 서랍장 레일이 뻑뻑할 때, 냄새나는 윤활유(WD-40)를 뿌릴 필요 없습니다. 집에 굴러다니는 양초나 고체 비누를 경첩이나 레일에 살짝 문질러주면 스르륵 부드럽게 열립니다." },
+                    { id: 1006, title: "방충망 작은 구멍 보수는 '투명 매니큐어'", content: "방충망에 작은 구멍이 났을 때 굳이 보수용 테이프를 사지 마세요. 구멍 난 부분에 투명 매니큐어를 살짝 발라주면, 그대로 굳으면서 구멍을 메워주어 모기와 날벌레 차단에 아주 효과적입니다." },
+                    { id: 1007, title: "벽지 얼룩 & 스티커 끈끈이는 '물파스'", content: "벽지에 묻은 손때는 부드러운 지우개로 살살 지우는 게 가장 좋습니다. 만약 끈적이는 스티커 자국이 남았다면 물파스를 톡톡 두드려 듬뿍 적신 뒤, 1분 뒤에 플라스틱 카드로 살살 밀어내면 벽지 손상 없이 깔끔하게 떨어집니다." },
+                    { id: 1008, title: "투룸 공간 넓히는 '압축봉' 선반", content: "식구 셋이 지내다 보면 수납이 항상 부족해지기 마련입니다. 신발장 안쪽 상단이나 싱크대 하부장 위쪽 등 버려지는 빈 공간에 다이소 압축봉을 2개 나란히 가로로 걸쳐보세요. 우산이나 가벼운 바구니를 올려둘 수 있는 훌륭한 맞춤형 선반이 공짜로 생깁니다." },
+
+                    { id: 1009, title: "케이블 타이로 '멀티탭 공중부양'", content: "바닥에 굴러다니는 멀티탭과 전선들은 발에 걸리적거리고 청소기 돌릴 때마다 짜증을 유발합니다. 책상 다리나 거실장 뒷면에 케이블 타이를 이용해 멀티탭을 묶어 바닥에서 띄워두면, 먼지도 덜 쌓이고 바닥 청소가 믿을 수 없을 만큼 편해집니다." },
+                    { id: 1010, title: "페트병으로 '싱크대 문짝' 쓰레기통 만들기", content: "생수 페트병을 반으로 잘라 절단면에 테이프를 붙여 매끄럽게 만든 뒤, 싱크대 문짝 안쪽에 꼭꼬핀이나 양면테이프로 붙여보세요. 요리할 때 나오는 자잘한 비닐이나 작은 쓰레기들을 바로바로 버릴 수 있어서 주방 동선이 엄청 깔끔해집니다." },
+                    { id: 1011, title: "못 박을 때 '빗 사용'으로 손가락 보호", content: "못을 박을 때 손가락이 망치에 맞을까봐 조심스럽다면, 빗의 이빨 부분에 못을 끼운 뒤 빗을 잡고 못을 박아보세요. 손가락이 완벽하게 보호되고 못도 정확히 박을 수 있습니다." }
+                ]
+            },
+            {
+          id: 11,
+name: "🏋️ 운동 & 피트니스",
+                emoji: "🏋️",
+                tips: [
+                    { id: 1101, title: "아파트 홈트엔 '요가매트 2장 십자(+) 겹치기'", content: "층간소음 때문에 집에서 운동하기 눈치 보인다면 매트 두 장을 십자 모양으로 겹쳐서 깔아보세요. 충격 흡수가 2배로 늘어나서 제자리 뛰기나 스쿼트를 해도 아랫집에 쿵쿵거리는 소리가 거의 전달되지 않습니다." },
+                    { id: 1102, title: "관절이 약하다면 '의자 스쿼트(Chair Squat)'", content: "가족 중에 허리나 무릎 관절이 약해서 계단을 오르내리기 힘들어하시는 분이 계시다면, 일반 스쿼트 대신 의자에 앉았다 일어나는 동작을 추천해 보세요. 넘어질 위험이 없고 무릎에 체중이 과하게 실리지 않아 어르신들도 집에서 안전하게 하체 근력을 키울 수 있습니다." },
+                    { id: 1103, title: "폼롤러는 '아픈 부위' 말고 '그 주변'을 문지르기", content: "허리나 목이 뻐근하다고 그 부위를 직접 폼롤러로 세게 문지르면 오히려 신경이 눌려 더 아플 수 있습니다. 허리가 아프면 엉덩이와 허벅지 뒤쪽을, 목이 아프면 겨드랑이 밑과 등(광배근)을 풀어줘야 진짜 통증이 사라집니다." },
+                    { id: 1104, title: "양치하는 3분 동안 '발뒤꿈치 들기(카프레이즈)'", content: "따로 시간 낼 필요 없이 매일 아침저녁 양치할 때 발뒤꿈치를 끝까지 들었다 내리는 동작을 30번씩만 해보세요. '제2의 심장'이라 불리는 종아리 근육이 펌프질을 해서 하루 종일 앉아있어 퉁퉁 붓는 다리의 혈액순환을 싹 해결해 줍니다." },
+                    { id: 1105, title: "블로그 작업 중엔 '책상 짚고 푸시업'", content: "컴퓨터 앞에 오래 앉아 글을 쓰다 보면 어깨가 안으로 둥글게 말립니다(라운드 숄더). 화장실 가기 전이나 물 뜨러 일어날 때, 튼튼한 책상 모서리를 짚고 서서 푸시업을 10개만 해보세요. 가슴 근육이 펴지면서 굽은 등이 쫙 펴집니다." },
+                    { id: 1106, title: "퇴근 후 운동은 '집에 도착하자마자 옷부터 입기'", content: "소파에 한 번 엉덩이가 닿는 순간 그날 운동은 끝난 겁니다. 집에 오자마자 씻기 전에 무조건 운동복으로 갈아입고 운동화부터 신으세요. 뇌가 핑계를 대기 전에 환경부터 세팅하는 것이 가장 강력한 의지력입니다." },
+                    { id: 1107, title: "비싼 닭가슴살 대신 '계란 3알 + 무가당 두유'", content: "단백질 채운다고 굳이 비싼 가공 닭가슴살을 매번 살 필요 없습니다. 삶은 계란 3알에 당류가 없는 두유 한 팩이면 훌륭하고 저렴한 양질의 단백질 25g 식단이 뚝딱 완성됩니다. 식비 방어에 아주 좋은 피트니스 식단입니다." },
+                    { id: 1108, title: "수분 섭취는 '운동 중'보다 '운동 2시간 전'에 듬뿍", content: "땀 흘리면서 물을 벌컥벌컥 마시면 배에 물이 차서 옆구리가 결리고 운동 효율이 떨어집니다. 진짜 수분 보충은 운동 시작 1~2시간 전에 물 2잔을 미리 마셔두어 몸속에 수분을 미리 채워두는 것입니다." },
+                    { id: 1109, title: "운동 전엔 스트레칭 대신 '가벼운 땀 내기'", content: "운동 전에 멈춰 서서 근육을 쭉쭉 늘리는 정적인 스트레칭을 하면 오히려 근육이 느슨해져서 힘을 못 씁니다. 본 운동 전에는 가볍게 제자리 뛰기를 하거나 팔벌려뛰기를 해서 몸에 열(땀)을 내는 것이 부상 방지에 100배 더 좋습니다." },
+                    { id: 1110, title: "'주 3회 1시간'보다 '매일 10분'이 몸을 바꾼다", content: "완벽하게 1시간 세트를 다 채워야 한다는 강박을 버리세요. 바빠서 운동할 시간이 없다면 딱 10분만 타이머를 맞추고 팔굽혀펴기나 스쿼트를 몰아서 해보세요. 짧더라도 매일 꾸준히 몸을 움직이는 습관이 결국 신진대사를 바꾸고 살 안 찌는 체질을 만듭니다." },
+                    { id: 1111, title: "1시간 앉아일 = 담배 깨닫기", content: "1시간 계속 앉아서 일하는 것이 담배 피우는 것만큼 나쁘다는 연구 결과가 있습니다. 꼭 일어나서 운동해주세요. 5분만 스트레칭이나 산책해도 큰 도움이 됩니다." }
+                ]
+            }
+        ];
+
+        let currentCategory = null;
+        let currentTip = null;
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function showHome() {
+            renderCategories();
+            showScreen('home');
+        }
+
+        function renderCategories() {
+            const grid = document.getElementById('categoriesGrid');
+            grid.innerHTML = categories.map(cat => `
+                <div class="category-card" onclick="showCategory(${cat.id})">
+                    <span class="category-emoji">${cat.emoji}</span>
+                    <div class="category-name">${cat.name}</div>
+                </div>
+            `).join('');
+        }
+
+        function showCategory(categoryId) {
+            currentCategory = categories.find(c => c.id === categoryId);
+            document.getElementById('categoryTitle').textContent = currentCategory.name;
+            renderTips();
+            showScreen('tips');
+        }
+
+        function renderTips() {
+            const list = document.getElementById('tipsList');
+list.innerHTML = currentCategory.tips.map(tip => `
+                <div class="tip-item" onclick="showTip(${tip.id})">
+                    <div class="tip-item-content">
+                        <div class="tip-title">${tip.title}</div>
+                        <div class="tip-summary">${tip.content.substring(0, 60)}...</div>
+                    </div>
+                    <button class="favorite-btn" onclick="toggleFavorite(event, ${tip.id})">
+                        ${isFavorited(tip.id) ? '❤️' : '🤍'}
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function showTip(tipId) {
+            const allTips = categories.flatMap(c => c.tips);
+            currentTip = allTips.find(t => t.id === tipId);
+            document.getElementById('tipTitle').textContent = currentTip.title;
+            document.getElementById('tipContent').innerHTML = `<p>${currentTip.content}</p>`;
+            updateDetailFavButton();
+            showScreen('detail');
+        }
+
+        function toggleFavorite(e, tipId) {
+            e.stopPropagation();
+            const index = favorites.indexOf(tipId);
+            if (index > -1) {
+                favorites.splice(index, 1);
+            } else {
+                favorites.push(tipId);
+            }
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            renderTips();
+        }
+
+        function toggleDetailFavorite() {
+            if (currentTip) {
+                toggleFavorite({stopPropagation: () => {}}, currentTip.id);
+                updateDetailFavButton();
+                renderTips();
+            }
+        }
+
+        function updateDetailFavButton() {
+            const btn = document.getElementById('detailFavBtn');
+            btn.textContent = isFavorited(currentTip.id) ? '❤️' : '🤍';
+        }
+
+        function isFavorited(tipId) {
+            return favorites.includes(tipId);
+        }
+
+        function showFavorites() {
+            const list = document.getElementById('favoritesList');
+            const empty = document.getElementById('emptyFavorites');
+
+            if (favorites.length === 0) {
+                list.innerHTML = '';
+                empty.style.display = 'block';
+            } else {
+                empty.style.display = 'none';
+                const allTips = categories.flatMap(c => c.tips);
+                const favTips = allTips.filter(t => favorites.includes(t.id));
+                list.innerHTML = favTips.map(tip => `
+                    <div class="tip-item" onclick="showTip(${tip.id})">
+                        <div class="tip-item-content">
+                            <div class="tip-title">${tip.title}</div>
+                            <div class="tip-summary">${tip.content.substring(0, 60)}...</div>
+                        </div>
+                        <button class="favorite-btn" onclick="toggleFavorite(event, ${tip.id})">❤️</button>
+                    </div>
+                `).join('');
+            }
+            showScreen('favorites');
+        }
+
+        function goBack() {
+            if (currentCategory) {
+                showCategory(currentCategory.id);
+            } else {
+                showHome();
+            }
+        }
+
+        showHome();
+    </script>
+</body>
+</html>
