@@ -1,10 +1,11 @@
 {
-  "name": "생활꿀팁",
-  "short_name": "꿀팁",
-  "description": "121가지의 실용적인 생활 꿀팁을 한 곳에서 만나보세요",
-  "start_url": "./lifewhips.html",
-  "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#FF8C42",
-  "orientation": "portrait"
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "생활꿀팁",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "생활꿀팁앱",
+  "start_url": "/",
+  "theme_color": "#ff8c42"
 }
