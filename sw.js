@@ -1,7 +1,7 @@
 const CACHE_NAME = 'lifewhips-v1';
 const urlsToCache = [
-  '/생활꿀팁-PWA.html',
-  '/manifest.json'
+  './lifewhips.html',
+  './manifest.json'
 ];
 
 // 설치 이벤트
